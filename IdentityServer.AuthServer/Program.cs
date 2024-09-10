@@ -1,3 +1,5 @@
+using IdentityServer.AuthServer;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +8,9 @@ builder.Services.AddIdentityServer()
   .AddInMemoryApiResources(IdentityServer.AuthServer.Config.GetApiResources())
   .AddInMemoryApiScopes(IdentityServer.AuthServer.Config.GetApiScopes())
   .AddInMemoryClients(IdentityServer.AuthServer.Config.GetClients())
+  .AddInMemoryIdentityResources(Config.GetIdentityResources())
+  .AddTestUsers(Config.GetUsers().ToList())
+
   .AddDeveloperSigningCredential();
 
 var app = builder.Build();

@@ -1,4 +1,6 @@
 ﻿using Duende.IdentityServer.Models;
+using Duende.IdentityServer.Test;
+using System.Security.Claims;
 
 namespace IdentityServer.AuthServer
 {
@@ -59,6 +61,27 @@ namespace IdentityServer.AuthServer
           AllowedScopes={"api1.read","api1.update", "api2.write","api2.update"}
         }
       };
+    }
+
+    public static IEnumerable<IdentityResource> GetIdentityResources()
+    {
+      return new List<IdentityResource>()
+     {
+       //token içerisinde mutlaka bir OpenId identity resource bulunmak zorunda bu openıd token'ı alan kullanıcının id sini tutar.
+       new IdentityResources.OpenId(),
+       //kullanıcı ile ilgili claimleri tutar
+       new IdentityResources.Profile()
+     };
+    }
+
+    public static IEnumerable<TestUser> GetUsers()
+    {
+      return new List<TestUser>()
+     {
+       new TestUser() {SubjectId="1", Username="testuser11", Password="password", Claims=new List<Claim>(){new Claim("given_name","ibrahim"), new Claim("family_name","aksoy"),}},
+
+       new TestUser() {SubjectId="2", Username="testuser22", Password="password", Claims=new List<Claim>(){new Claim("given_name","tarik"), new Claim("family_name","aksoy"),}}
+     };
     }
   }
 }
